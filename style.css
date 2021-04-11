@@ -1,0 +1,310 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: helvetica;
+}
+
+body {
+  display: none;
+}
+
+/* JQuery ui icom removal */
+.ui-icon {
+  background-image: url("") !important;
+}
+
+.desktop {
+  height: 100vh;
+  width: 100vw;
+  background-color: #007d7b;
+  background-image: url("https://getwallpapers.com/wallpaper/full/1/2/d/634887.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  overflow: hidden;
+  position: fixed;
+  z-index: -999;
+}
+
+.startbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  display: block;
+  height: 38px;
+  width: 100vw;
+  background-color: #bdbebd;
+  border-top: 2px solid white;
+  padding: 3px;
+}
+
+#startbutton {
+  cursor: pointer;
+  float: left;
+  text-decoration: none;
+  color: black;
+  width: 70px;
+  height: 29px;
+  text-align: right;
+  font-family: sans-serif;
+  padding: 4px;
+  background-image: url("http://vignette2.wikia.nocookie.net/logopedia/images/3/32/Microsoft_Windows_Compatible_Icon.png/revision/latest/scale-to-width-down/303?cb=20160806162438");
+  background-size: auto 70%;
+  background-position: 5% 50%;
+  background-repeat: no-repeat;
+}
+
+.startbutton-off {
+  border-top: 2px solid white;
+  border-left: 2px solid white;
+  border-right: 2px solid black;
+  border-bottom: 2px solid black;
+}
+
+.startbutton-on {
+  border-top: 2px solid black;
+  border-left: 2px solid black;
+  border-right: 2px solid white;
+  border-bottom: 2px solid white;
+}
+
+#menu {
+  position: absolute;
+  bottom: 35px;
+  left: 3px;
+  background-color: #bdbebd;
+  z-index: 10;
+  border-left: 2px solid white;
+  border-top: 2px solid white;
+  border-right: 2px solid grey;
+  border-bottom: 2px solid grey;
+  display: none;
+}
+
+.sidebar {
+  height: 100%;
+  background: linear-gradient(to bottom, #000080, #1084d0);
+  display: inline-block;
+  width: 25px;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+}
+
+.headline {
+  transform: rotate(-90deg);
+  transform-origin: 0% 0%;
+  width: 150%;
+  padding-top: 4px;
+  padding-bottom: 3px;
+  padding-left: 0px;
+  color: white;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  text-align: left;
+  margin-bottom: -15px;
+}
+
+.item {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-left: 40px;
+  padding-right: 70px;
+  font-size: 13px;
+  margin-left: 25px;
+  background-size: auto 80%;
+  background-position: 5px 50%;
+  background-repeat: no-repeat;
+}
+
+.more {
+  position: relative;
+  list-style: none;
+}
+
+.more::after {
+  content: "►";
+  left: 65px;
+  position: relative;
+  float: right;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+}
+
+.more:hover .dropdown-content {
+  display: block;
+
+  top: -2px;
+  left: 100%;
+  background-color: #bdbebd;
+  color: black;
+  list-style: none;
+  border-left: 2px solid white;
+  border-top: 2px solid white;
+  border-right: 2px solid grey;
+  border-bottom: 2px solid grey;
+  box-sizing: border-box;
+  min-width: 100%;
+}
+
+.dropdown-item {
+  cursor: pointer;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 40px;
+  padding-right: 10px;
+  font-size: 13px;
+  background-size: auto 70%;
+  background-position: 5% 50%;
+  background-repeat: no-repeat;
+  white-space: nowrap;
+}
+
+.dropdown-item:hover {
+  color: white;
+  background-color: darkblue;
+}
+
+.item:hover {
+  background-color: darkblue;
+  color: white;
+}
+
+.menu-break::after {
+  content: "";
+  border-top: 1px solid white;
+  height: 1px;
+  display: block;
+}
+
+.time {
+  height: 29px;
+  float: right;
+  text-align: center;
+  padding: 4px;
+  border-top: 2px solid grey;
+  border-left: 2px solid grey;
+  border-bottom: 2px solid white;
+  border-right: 2px solid white;
+}
+
+.window {
+  background-color: #bdbebd;
+  border-left: 1px solid white;
+  border-bottom: 1px solid black;
+  border-top: 1px solid white;
+  border-right: 1px solid black;
+  box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.75);
+  display: none;
+}
+
+.window-inner {
+  border: 2px solid #bdbebd;
+  height: 100%;
+}
+
+.window-header {
+  background: linear-gradient(to right, #000080, #1084d0);
+  font-size: 15px;
+  overflow: auto;
+}
+
+.window-header p {
+  color: white;
+  display: inline;
+  position: absolute;
+  vertical-align: middle;
+  display: inline;
+  overflow: hidden;
+  white-space: nowrap;
+  width: calc(100% - 105px);
+  padding-top: 3px;
+  padding-left: 3px;
+}
+
+.window-icon {
+  width: 20px;
+  height: 20px;
+  background-color: #bdbebd;
+  float: right;
+  border-top: 1px solid white;
+  border-left: 1px solid white;
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+
+  text-align: center;
+  margin-top: 3px;
+  margin-right: 3px;
+  margin-bottom: 3px;
+}
+
+.close {
+  background-image: url("https://res.cloudinary.com/penry/image/upload/q_100/v1475278244/close_jw5cay.png");
+  background-size: auto 100%;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+}
+
+.maximise {
+  background-image: url("https://res.cloudinary.com/penry/image/upload/q_100/v1475278244/maximise_anhbyl.png");
+  background-size: auto 100%;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+}
+
+.minimise {
+  background-image: url("https://res.cloudinary.com/penry/image/upload/q_100/v1475278244/minimise_p60zap.png");
+  background-size: auto 100%;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+}
+
+.window-content {
+  margin-top: 2px;
+  border: 2px solid #808080;
+  border-bottom: 2px solid white;
+  border-right: 2px solid white;
+  height: calc(100% - 28px);
+}
+
+.program {
+  float: left;
+  display: block;
+  margin-left: 5px;
+  height: 29px;
+  width: 200px;
+  text-align: left;
+  padding: 4px;
+  padding-left: 30px;
+  border-top: 2px solid white;
+  border-left: 2px solid white;
+  border-bottom: 2px solid black;
+  border-right: 2px solid black;
+  background-color: #bdbebd;
+  box-sizing: border-box;
+  overflow: hidden;
+  white-space: nowrap;
+
+  background-size: auto 70%;
+  background-position: 3px 50%;
+  background-repeat: no-repeat;
+}
+
+.window-header-icon {
+  height: 20px;
+  margin-left: 3px;
+  margin-top: 3px;
+  display: inline-block;
+}
+
+.focused {
+  border-top: 2px solid black;
+  border-left: 2px solid black;
+  border-bottom: 2px solid white;
+  border-right: 2px solid white;
+}

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Windows</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <!-- partial:index.partial.html -->
+    <link
+      rel="stylesheet"
+      href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/base/jquery-ui.css"
+      type="text/css"
+    />
+    <div id="app"></div>
+
+    <div class="startbar">
+      <div id="startbutton" class="startbutton-off">
+        <b>Start</b>
+      </div>
+      <div class="time"></div>
+    </div>
+
+    <div id="menu">
+      <div class="sidebar"></div>
+      <div class="headline"><b>Windows</b> 98</div>
+      <ul class="menu-content">
+        <li
+          class="item more"
+          data-icon="https://res.cloudinary.com/penry/image/upload/v1474990247/directory_program_group_small_fqw8rr.ico"
+        >
+          Programs
+          <ul class="dropdown-content">
+            <li
+              class="dropdown-item launch"
+              data-icon="https://res.cloudinary.com/penry/image/upload//w_65,h_65,c_lpad/v1474990266/msie2_ks3wek.png"
+              data-launch="InternetExplorer"
+              data-title="Internet Explorer"
+              data-url="https://98.js.org/programs/explorer/index.html?address=https%3A%2F%2Fwww.google.com%2F"
+            >
+              Internet Explorer
+            </li>
+            <li
+              class="dropdown-item launch"
+              data-launch="Notepad"
+              data-icon="https://res.cloudinary.com/penry/image/upload/v1474990270/notepad_file_kf9wqx.ico"
+              data-title="Notepad"
+              data-url="https://98.js.org/programs/notepad/index.html"
+            >
+              Notepad
+            </li>
+            <li
+              class="dropdown-item"
+              data-launch="WinAmp"
+              data-icon="https://98.js.org/images/icons/winamp2-32x32.png"
+              data-title="WinAmp"
+              onclick="launchWinAmp()"
+            >
+              WinAmp
+            </li>
+          </ul>
+        </li>
+        <li
+          class="item more"
+          data-icon="https://res.cloudinary.com/penry/image/upload/w_65,h_65,c_lpad/v1474990246/directory_pictures_ualddt.png"
+        >
+          Photos
+          <ul class="dropdown-content">
+            <li
+              class="dropdown-item launch"
+              data-launch="screenshot1"
+              data-title="screenshot1.jpg"
+              data-icon="https://res.cloudinary.com/penry/image/upload/q_100/v1474990272/pictures_bt9tfg.ico"
+              data-url="https://i.ytimg.com/vi/0blP8k_wDzE/maxresdefault.jpg"
+            >
+              Screenshot1.jpg
+            </li>
+
+            <li
+              class="dropdown-item launch"
+              data-launch="screenshot2"
+              data-title="screenshot2.jpg"
+              data-icon="https://i.ytimg.com/vi/0VqvCa_XYsU/maxresdefault.jpg"
+              data-url="https://i.ytimg.com/vi/0VqvCa_XYsU/maxresdefault.jpg"
+            >
+              Screenshot2.jpg
+            </li>
+          </ul>
+        </li>
+        <li
+          class="item more"
+          data-icon="https://win98icons.alexmeub.com/icons/png/package-1.png"
+        >
+          Applications
+          <ul class="dropdown-content">
+            <li
+              class="dropdown-item launch"
+              data-launch="420"
+              data-title="Paint"
+              data-icon="https://win98icons.alexmeub.com/icons/png/paint_old-0.png"
+              data-url="paint/index.html"
+            >
+              Paint
+            </li>
+            <li
+              class="dropdown-item launch"
+              data-launch="MyDocuments"
+              data-title="My Documents"
+              data-icon="https://98.js.org/images/icons/my-documents-folder-32x32.png"
+              data-url="https://98.js.org/programs/explorer/index.html?address=%2Fmy-documents"
+            >
+              My Documents
+            </li>
+          </ul>
+        </li>
+        <li
+          class="item more"
+          data-icon="https://win98icons.alexmeub.com/icons/png/mshearts.png"
+        >
+          Games
+
+          <ul class="dropdown-content">
+            <li
+              class="dropdown-item launch"
+              data-launch="SpaceInvaders"
+              data-title="Space Invaders"
+              data-icon="https://win98icons.alexmeub.com/icons/png/shell_window2.png"
+              data-url="games/spaceship.html"
+            >
+              Space Invaders
+            </li>
+            <li
+              class="dropdown-item launch"
+              data-launch="Pokemon"
+              data-title="Pokemon"
+              data-icon="https://win98icons.alexmeub.com/icons/png/shell_window2.png"
+              data-url="games/pokemon.html"
+            >
+              Pokemon
+            </li>
+            <li
+              class="dropdown-item launch"
+              data-launch="Solitaire"
+              data-title="Solitaire"
+              data-icon="https://win98icons.alexmeub.com/icons/png/shell_window2.png"
+              data-url="http://radovanjanjic.com/js-solitaire/"
+            >
+              Solitaire
+            </li>
+            <li
+              class="dropdown-item launch"
+              data-launch="Enduro"
+              data-title="Enduro"
+              data-icon="https://win98icons.alexmeub.com/icons/png/shell_window2.png"
+              data-url="games/enduro.html"
+            >
+              Enduro
+            </li>
+            <li
+              class="dropdown-item launch"
+              data-launch="Minesweeper"
+              data-title="Minesweeper"
+              data-icon="https://win98icons.alexmeub.com/icons/png/minesweeper-0.png"
+              data-url="games/minesweeper.html"
+            >
+              Minesweeper
+            </li>
+          </ul>
+        </li>
+        <li
+          class="item"
+          data-icon="https://res.cloudinary.com/penry/image/upload/q_100/v1474990280/settings_gear_zxd7tf.ico"
+        >
+          Settings
+        </li>
+        <li
+          class="item"
+          data-icon="https://res.cloudinary.com/penry/image/upload/q_100/v1474990279/search_file_2_yy4muv.ico"
+        >
+          Find
+        </li>
+        <li
+          class="item"
+          data-icon="https://res.cloudinary.com/penry/image/upload/v1474990254/help_book_small_ra0uhc.ico"
+        >
+          Help
+        </li>
+        <li
+          class="item"
+          data-icon="https://res.cloudinary.com/penry/image/upload/v1474990231/application_hourglass_small_yyhy5z.ico"
+        >
+          Run
+        </li>
+        <li
+          class="item"
+          data-icon="https://res.cloudinary.com/penry/image/upload/v1474990258/key_win_anpnfo.ico"
+        >
+          Log off
+        </li>
+        <li
+          class="item"
+          data-icon="https://res.cloudinary.com/penry/image/upload/v1474990281/shut_down_normal_t24or4.ico"
+        >
+          Shutdown
+        </li>
+      </ul>
+    </div>
+
+    <div class="desktop"></div>
+    <!-- partial -->
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.4/dayjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
+    <script src="https://unpkg.com/webamp"></script>
+    <script src="./script.js"></script>
+  </body>
+</html>

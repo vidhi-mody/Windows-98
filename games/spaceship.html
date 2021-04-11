@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="Description" content="Enter your description here"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
+<link rel="stylesheet" href="assets/css/style.css">
+<title>Title</title>
+<style>
+    * {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background: black;
+}
+
+#canvas {
+  background: black;
+  border: solid 5px white;
+  position: absolute;
+  top: calc(50% - 245px);
+  left: calc(50% - 185px);
+  outline: none;
+}
+</style>
+</head>
+<body>
+<canvas width="360" height="480" id="canvas" tabindex="0"></canvas>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script>
+
+"use strict";
+
+/**************************/
+/***** CLASS : HELPER *****/
+/**************************/
+class Helper {
+  randNumGen(from, to) {
+    return Math.floor((Math.random() * (to + 1)) + from);
+  }
+}
+
+/**************************/
+/***** CLASS : IMAGES *****/
+/**************************/
+class Images {
+  base64ToImg(value) {
+    var img = new Image();
+    img.src = value;
+    return img;
+  }
+
+  spaceship() {
+    return this.base64ToImg("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEEAAABBCAYAAACO98lFAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOwgAADsIBFShKgAAAABh0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC45bDN+TgAAAopJREFUeF7tkNFuxDAIBPv/P506Vk7yrQZcMFYe6pGmD1vOsPm5rmu3FdC7ZWJYbAX0bpkYFlsBvVsmhsVWQO+WiWGxFdC7ZWJYbAX0bpkYFlsBvVsmhgXuhPYtiWGBO6F9S2JY4E5o35IYFrgT2rckhgXuhPYtiWGBO6F9S2JY4E5o35IYFrgT2rckhgXuhPYtiWGBO6F9S2KYdMpPW/cXA+gNKTFMOoUKkwH0hpQYJp1ChckAekNKDJMiVDKqg96QEsOkCJWK6qA3pMQwKUKlojroDSkxTIpQqagOekNKDJMiVCqqg96QEsOkCJWK6qA3pMQwKUKlojroDSkxTIpQqagOekNKDB8VmhlFqFRUB71BVWimb7BUaGYUoVJRHfQGVaGZvsFSoZlRhEpFddAbVIVm+gZLhWZGESoV1UFvUBWa6RssFZoZRahUVAe9QVVopm+wVGhmFKFSUR30BlWhmb7BUqGZUYRKRXXQG1SFZvoGS4VmRhEqFdVBb1AVmukbLBWaGUWoVFQHvUFVaKZvsFRoZhShUlEd9AZVoZm+wVKhmVGESkV10BtUhWb6BkuFZkYRKhXVQW9QFZrpGywVmhlFqFRUB71BVWimb7BUaGYUoVJRHfQGVaGZvsFSsXIXKhU1wazDlxg+KlbuQqWiJph1+BLDx3KoILkR7djF8LEcKkxuRDt2MXwshwqTG9GOXQwfy6HC5Ea0Y/f+8+85H6FxPkLjfITG+QiN8xEa5yM0zkdonI/QOB+hkfkI92/IN6A7bkOEf9DQhR/fgO64DRH+QUMXfnwDuuM2hPcDfXjmG9Adnoj5j4Y+MPMN6A5PxPxHQx+Y+QZ0hydi/qOhD8x8A7rDE7iuXzcwW44prQTuAAAAAElFTkSuQmCC");
+  }
+
+  bacteria() {
+    return this.base64ToImg("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB8AAAAfCAYAAAAfrhY5AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOwgAADsIBFShKgAAAABh0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC45bDN+TgAAAMxJREFUWEe1jUEOAzEIA/f/n07ZyIoyULUc8EhzMJD4WZV35hKUQZAfTArKIMgPJgVlEOQHk4K/B8OgC0E6QReCdIIuBOkEXQjSCboQpBN0IcjDE+vsLxr3d8/eZg+Nz0Dj/u7Z2+yh8Rlo3N89e5s9ND4Djfu7Z2+zh8ZnoHF/9+xt1gm6EKQTdCFIJ+hCkE7QhSCdoAtBOkEXgnSCLgTpBF0I0gm6EKQTdCFIJ+hCkE7Q9a0MB8OCMgjyg0lBGQT5waSgDIL8YNKLtT7FZfG33M06KgAAAABJRU5ErkJggg==");
+  }
+
+  title() {
+    return this.base64ToImg("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK8AAAA3CAIAAAD1xY0MAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAUgSURBVHhe7dbBagNZEARB//9P714iL2bblIXALKO4KekaeDd9/ZV/fsMm6sYm6sYm6sYm6sbmObx7YxN1YxN1YxN1YxN1Y/Mc3r2xibqxibqxibqxibqxeQ7v3thE3dhE3dhE3dhE3dg8h3dvbKJubKJubKJubKJubJ7Du6NGjRo16kt8IurBUdSoUaNGjRr1Obw7atSoUaO+xCeiHhxFjRo1atSoUZ/Du6NGjRo16kt8IurBUdSoUaNGjRr1Obw7atSoUaO+xCeiHhxFjRo1atSoUZ/Du6NGjRo16kt8IurBUdSoUaNGjRr1Obx7YxP14GhjE/XgaGMTNWrUqM/h3RubqAdHG5uoB0cbm6hRo0Z9Du/e2EQ9ONrYRD042thEjRo16nN498Ym6sHRxibqwdHGJmrUqFGfw7s3NlEPjjY2UQ+ONjZRo0aN+hzefXB0cBT1JT4R9eDo4OjgKGrUqM/h3QdHB0dRX+ITUQ+ODo4OjqJGjfoc3n1wdHAU9SU+EfXg6ODo4Chq1KjP4d0HRwdHUV/iE1EPjg6ODo6iRo36HN59cHRwFPUlPhH14Ojg6OAoatSoz+HdUaNGjbqxOTiKenAUNWrUqBub5/DuqFGjRt3YHBxFPTiKGjVq1I3Nc3h31KhRo25sDo6iHhxFjRo16sbmObw7atSoUTc2B0dRD46iRo0adWPzHN4dNWrUqBubg6OoB0dRo0aNurH5+Pj4+Pj4+Pj4+D/wL3ZjE3VjE3VjE3VjE3VjE3VjEzVq1KgHR1EPjjbvfOHPbKJubKJubKJubKJubKJGjRr14CjqwdHmnS/8mU3UjU3UjU3UjU3UjU3UqFGjHhxFPTjavPOFP7OJurGJurGJurGJurGJGjVq1IOjqAdHm3e+8Gc2UTc2UTc2UTc2UTc2UaNGjXpwFPXgaPO7T39jEzVq1KhRo0aNGnVjE3VjE3VjEzVq1IOjqAdHUaPmd5/+xiZq1KhRo0aNGjXqxibqxibqxiZq1KgHR1EPjqJGze8+/Y1N1KhRo0aNGjVq1I1N1I1N1I1N1KhRD46iHhxFjZrfffobm6hRo0aNGjVq1Kgbm6gbm6gbm6hRox4cRT04iho1v/v0NzZRo0aNGjVq1KhRNzZRNzZRNzZRo0Y9OIp6cBQ1ar7//plvRN3YRN3YRI26sTk4Ojja2ETd2BwcRT042vzZC9WNTdSoG5uDo4OjjU3Ujc3BUdSDo82fvVDd2ESNurE5ODo42thE3dgcHEU9ONr82QvVjU3UqBubg6ODo41N1I3NwVHUg6PNn71Q3dhEjbqxOTg6ONrYRN3YHBxFPTja2FxcRY0adWMTNWrUqFE3NlHfwRejRo0aNerBUdSDo6iv8Y2oUaNubKJGjRo16sYm6jv4YtSoUaNGPTiKenAU9TW+ETVq1I1N1KhRo0bd2ER9B1+MGjVq1KgHR1EPjqK+xjeiRo26sYkaNWrUqBubqO/gi1GjRo0a9eAo6sFR1Nf4RtSoUTc2UaNGjRp1YxP1HXwxatSoUaMeHEU9OIp6cbWxiRp1YxM1atSoG5uoG5uoG5uoUaNGPTiKenAU9eJqYxM16sYmatSoUTc2UTc2UTc2UaNGjXpwFPXgKOrF1cYmatSNTdSoUaNubKJubKJubKJGjRr14CjqwVHUi6uNTdSoG5uoUaNG3dhE3dhE3dhEjRo16sFR1IOjqBdXG5uoUTc2UaNGjbqxibqxibqxiRo1atSDo6gHR1H/09fXv7xgcs6/NeMDAAAAAElFTkSuQmCC");
+  }
+
+  controls() {
+    return this.base64ToImg("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAABXCAIAAAB9QrVFAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAMHSURBVHhe7dzhbp0wDIbhw+7/nhkTlg/Sd2rZIRxM9z5/NhLHdrsoKWq7ZV3X1w+WZdn/UorJjKjrYnxEZfLgdn/sT6Ar9ii6e9/1mTsxuElL92ZQtFSrNKIyMbgd5yi6Y4+iu/l7dLs3d/Y8aruId/Z8Jat0YBNogHMU3bFH0d0D9qh96XDBq7flPbAJdMI5iu7Yo+juq9+vd6WpYERNj8HtOEfRHXsUAAAAAAAAAAAAAAAAAAAAAAAAAADgGeb/fr16dExGKY8HB1Nqes8Pwu8uozv2KLqb///hl0bUWMx1I25sSpXyZEZ+Pc5RdMceRXf3vNcH99Qt/aigQ1XK48HBlJre84NwjqI79ii6+3A76GUUXE8us2osjxqrFYy4UlEXTKlMHney1u/AOYru2KPorvZeH9wvGhOMqOtiTo5klFYFwaUOVannB+EcRXfsUQAAANyp9rN5qvS+OeudVHsORlRmVdt+MnkyNLMq9axm9cw7E7pjj6K7wZ/DV5kYVwpWujwzokqrMlMqyDxrZEwmz6wYN9Y85yi6Y4+iu6++17uxM99praCE+kI/zhNqiZMjymMyNLPK1Cr1kymqOEfRHXsU3f3X7/UuExzEjPUza2RMJs+sGDfWPOcoumOPorvaz+ErjbnuzHe6PBhRWvRB/ZTyBDJ5SjGZ6qVgxzmK7tijAAAAuFPqvd4F72Vj74DBiLolT8Y3+8nkySjl0TZcJk/wUeiI4p0J3bFH0d17j26n7s6eR1mWA5vIsTWHVfY82pgtPrCJou0y2tnzJxYRxlgTd3+enS2+ux9bc1hlz8vCOYru2KPo7p73enWy1lg/LqiVkamlJU6OKI/JKOXRNlwmz8lanKPojj2K7j7s0e2M3dlzkS0Ol1vEaAlnWZZ/X7HsbOLAIg5sosgK/HxtbazA6Y8rwyod2MQoyzKaxxaHyy2iWIJzFN2xR9Hde4/aKRzemxm2eHT5dNbNgU0U2Wfn9JVqTYRflljEutrzp6IWcWATRVag8b875yi6Y4+it9frLztfaj9YtSY6AAAAAElFTkSuQmCC");
+  }
+
+  begin() {
+    return this.base64ToImg("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAREAAAAPCAYAAADDP/vRAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsIAAA7CARUoSoAAAAEJSURBVHhe7dmxDsIwDIThlPd/Z2DoYIZTz1xCW/F/C8i6Ok6HKIjt+TYObNu2fxvDiF8633X3/d493/Vv8yTz12e7mVp/7J8A8BUOEQCRj58z6rqyoq6sznfNmmd1XZmVP6uecHqunqfbv7tuMqfzbM0o3EQARDhEAET4d+bAlffr7OvK8yvOvhzOu1IZ51nH6vfTzVfOHlWm1rmJAIhwiACIyH9nlHqNqZIrk6PbZ9a6iuo/a87V/ZVZ8zj1ypmtS81Qdefv6vbvrpv0STK1zk0EQIRDBEAk+jnjXJ9qXfllviuZx1lX5Z26clZ+RT3h9KwZJZmn2391vuq+H7UuNxEAEQ4RAIExXrW9eRXl9rFWAAAAAElFTkSuQmCC");
+  }
+
+  gameover() {
+    return this.base64ToImg("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAREAAAAhCAYAAAD+mZ+XAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsIAAA7CARUoSoAAAAG5SURBVHhe7dnRasQwDETRpP//z2nNttRlO2TUsb0JvQfCglAc2Q9C2ezbth0fFwY5jvPj3Pd27A9JfjWu9PlVV6t/9n7x7O3zFwD+hCYCINLmuvP5DzY1lisrx/sZY3xSfxJXRq0DH5MIgAhNBECkzXXfcx5i/disqDFbWZlfpV4TZsSVJB85JhEAEZoIgAhNZKI2Nn9djpX5/XUXv9XeLkc1Hz6aCIAITQRApM12539nw5Z8TZgdV/r8qmR9VXOvur5zDsl+8YxJBECEJgIg0ua683kRAAQmEQARmgiAyH4Yf3+rf7mVK+dX3X2/d8+v+m/1rMxXcSYRABGaCIDIj9eZ6hiTxJXZ+VWj6pkdV0blvyqecNacXU91/eS5zr2j6unjTCIAIjQRABG+zpy48n6dfV25fsXZl8M5K5Xj3OtYeT7V/SrV9ZlEAERoIgAi8uuMosahZMRyVNcZ9VxFrT+qztnrK6PqceI9p7YqVUOvWn9Vdb/Jc6v77TnPUusziQCI0EQARKLXmT7fiSsr86uSepznqnwnrrwqf0Y84azZ5yhJPck5KM5eqjnJvUwiACI0EQCBbXsHXIP8gB5sYFEAAAAASUVORK5CYII=");
+  }
+
+  score() {
+    return this.base64ToImg("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEUAAAAPCAYAAACyTgIjAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAACASURBVFhH7ZdLCoAwEENnvP+d/UAXIyaYoRS6yNsoQ2olvCLmeRM/ZOa4ixDiW+cVjnE1BZcCeB0fRbOq60x+9VyBrbUpAJcCmPr6KLqyvDJnzOQVbArApQAer6B/Xe0Z3eew48D26r5Pha21KQCXAtj636c7Z9S8gk0BuJQPERdpJmUVisHDJgAAAABJRU5ErkJggg==");
+  }
+
+  life0() {
+    return this.base64ToImg("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEUAAAAPCAYAAACyTgIjAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsIAAA7CARUoSoAAAABzSURBVFhH7dXBCsAwCANQ3f//87qDh4xGiBR2Wd5lo6gUUZr3I0pm1p8GUttcjOlg7jR+Sql/1deAm0J8uj5K/Wk8OrkPnntSCDeF+PXr4/UZcFMIvz4Fzz0phJtCvNanc7IaSgwSriPV6Sj1PSmEm7KJWATdXwbdntMOAAAAAElFTkSuQmCC");
+  }
+
+  life1() {
+    return this.base64ToImg("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEUAAAAPCAIAAAA9LJV0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABlSURBVEhL7ZTBCgAhCER1//+fXShwDwPDCh4s5l0KmtTgkUeELdx9bwgknEdIhv9kSuA8z16u4bb39PtG6rT3SjIj32aj/2028m1BfCN1unolmJFvs/l8Q0pSlfRAyC2CfDsLsxe4dFEaU2rZYgAAAABJRU5ErkJggg==");
+  }
+
+  life2() {
+    return this.base64ToImg("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEUAAAAPCAIAAAA9LJV0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABjSURBVEhL7ZRBCgAgCAS1///ZoMIOwmIQIbFzKWhZiYbUzGSgqnMDAGE/ing4k8kAetpaf+G3+9z3DfTcmhXxMH2rDf+32tC3AfAN9DyYRd9qs32LHD10xqWjWQDQQ98qI9IBmKlRDoy7UhMAAAAASUVORK5CYII=");
+  }
+
+  life3() {
+    return this.base64ToImg("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEUAAAAPCAIAAAA9LJV0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAClSURBVEhL7c9BCsMwDETR3P/SrgmvxSBhVLQIAf+NEPPtQdf4chWgZrIgg1FzKniTce65sS8IMhgvvceewWh3RahTNtsdgu0/jHZXhDpls90h2P7DaHdFqFM22x2CDEbNqeBNxrnnxr4gyGC89B57BqPdFaFO2Wx3CLb/MNpdEeqUzXaHYPsPo90VoU7ZzOAuCP6MfjAyGDW8yTj33NgXBM/eM8YHwHO6ftWUHV0AAAAASUVORK5CYII=");
+  }
+
+  numbers() {
+    return this.base64ToImg("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFoAAAAPCAYAAABk69hGAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsIAAA7CARUoSoAAAACMSURBVFhH7ZjBDoAwCEPB//9n9bBDdyCWuDWa9F1mSMdYwziY5008kJnjKwLlVXwVu/MrOcZqNmOjRUyjo/tUUV+BeSp9dRZTD5OTqRNZVQ9q3NEibLQIanR0439BeS93tAgbLWLL6MA4A7O3q0He1N+NI6hxR4uw0SI+96+DeYarUN7LHS3CRkuIuACBMnQGoM/gmgAAAABJRU5ErkJggg==");
+  }
+}
+
+/**************************/
+/***** CLASS : SCRIPT *****/
+/**************************/
+class Script {
+  constructor() {
+    this.canvas = document.querySelector("#canvas");
+    this.context = canvas.getContext("2d");
+    this.helper = new Helper();
+    this.images = new Images();
+    this.keyArray = [
+      32, // 'Space bar'
+      37, // 'Left' key
+      39  // 'Right' key
+    ];
+    this.keyState = {};
+    this.data = {
+      start: false,
+      end: false,
+      canvas: {
+        width: 360,
+        height: 480
+      },
+      images: {
+        title: {
+          width: 175,
+          height: 55,
+          position: {
+            x: 92,
+            y: 100
+          },
+          image: this.images.title()
+        },
+        controls: {
+          width: 225,
+          height: 87,
+          position: {
+            x: 69,
+            y: 250
+          },
+          image: this.images.controls()
+        },
+        begin: {
+          width: 273,
+          height: 15,
+          position: {
+            x: 43,
+            y: 400
+          },
+          image: this.images.begin()
+        },
+        gameover: {
+          width: 273,
+          height: 33,
+          position: {
+            x: 43,
+            y: 100
+          },
+          image: this.images.gameover()
+        },
+        life: {
+          width: 69,
+          height: 15,
+          position: {
+            x: 25,
+            y: 460
+          },
+          images: [
+            this.images.life0(),
+            this.images.life1(),
+            this.images.life2(),
+            this.images.life3()
+          ]
+        },
+        score: {
+          width: 69,
+          height: 15,
+          position: {
+            x: 135,
+            y: 460
+          },
+          image: this.images.score()
+        },
+        numbers: {
+          width: 9,
+          height: 15,
+          position: {
+            x: 207,
+            y: 460
+          },
+          image: this.images.numbers(),
+          clip: [
+            {x: 0, y: 0},
+            {x: 9, y: 0},
+            {x: 18, y: 0},
+            {x: 27, y: 0},
+            {x: 36, y: 0},
+            {x: 45, y: 0},
+            {x: 54, y: 0},
+            {x: 63, y: 0},
+            {x: 72, y: 0},
+            {x: 81, y: 0}
+          ]
+        }
+      },
+      spaceship: {
+        image: this.images.spaceship(),
+        width: 65,
+        height: 65,
+        position: {
+          x: 0,
+          y: 0
+        },
+        fire: {
+          width: 5,
+          height: 15,
+          spawn: [],
+          moveSpeed: 4
+        },
+        moveSpeed: 2,
+        life: 3,
+        score: 0
+      },
+      bacteria: {
+        image: this.images.bacteria(),
+        width: 31,
+        height: 31,
+        spawn: [],
+        moveSpeed: 3,
+        summonTime: 70,
+        timer: 0
+      }
+    };
+    this.gameOverShowTime = 100;
+    this.gameOverCount = 0;
+  }
+
+  /***********************/
+  /***** EVENTS AREA *****/
+  /***********************/
+  setEvents() {
+    var script = this;
+
+    window.addEventListener("keydown", function(evt) {
+      if (script.keyArray.indexOf(evt.keyCode) >= 0) {
+        script.keyState[evt.keyCode] = true;
+      }
+      if (evt.keyCode === 32 && !script.data.start) {
+        script.keyState[32] = false;
+        script.data.start = true;
+      }
+      if (evt.keyCode === 32 && script.data.end) {
+        script.keyState[32] = false;
+        
+        if (script.gameOverCount < script.gameOverShowTime) {
+          return;
+        }
+
+        script.data.start = false;
+        script.data.end = false;
+        script.data.spaceship.life = 3;
+        script.data.spaceship.score = 0;
+        script.data.spaceship.fire.spawn = [];
+        script.data.bacteria.spawn = [];
+        script.gameOverCount = 0;
+        script.setImages();
+      }
+    }, true);
+
+    window.addEventListener("keyup", function(evt) {
+      if (script.keyArray.indexOf(evt.keyCode) >= 0) {
+        script.keyState[evt.keyCode] = false;
+      }
+    }, true);
+  }
+  /***************************/
+  /***** EVENTS AREA END *****/
+  /***************************/
+
+  /**************************/
+  /***** COLLISION AREA *****/
+  /**************************/
+  fireToBacteriaCollision(i) {
+    for (var j = 0; j < this.data.bacteria.spawn.length; j++) {
+      if (
+        typeof this.data.spaceship.fire.spawn[i] === "undefined" ||
+        typeof this.data.bacteria.spawn[j] === "undefined") {
+        continue;
+      }
+      
+      if (
+        this.data.spaceship.fire.spawn[i].y < (this.data.bacteria.spawn[j].y + this.data.bacteria.height)
+        && (this.data.spaceship.fire.spawn[i].y + this.data.spaceship.fire.height) > this.data.bacteria.spawn[j].y
+        && this.data.spaceship.fire.spawn[i].x < (this.data.bacteria.spawn[j].x + this.data.bacteria.width)
+        && (this.data.spaceship.fire.spawn[i].x + this.data.spaceship.fire.width) > this.data.bacteria.spawn[j].x
+      ) {
+        this.data.spaceship.fire.spawn.splice(i, 1);
+        this.data.bacteria.spawn.splice(j, 1);
+        script.data.spaceship.score++;
+      }
+    }
+  }
+
+  bacteriaToSpaceShipCollision(i) {
+    if (typeof this.data.bacteria.spawn[i] === "undefined") {
+      return;
+    }
+    
+    if (
+      (this.data.bacteria.spawn[i].y + this.data.bacteria.height) > this.data.spaceship.position.y
+      && this.data.bacteria.spawn[i].y < (this.data.spaceship.position.y + this.data.spaceship.height)
+      && (this.data.bacteria.spawn[i].x + this.data.bacteria.width) > this.data.spaceship.position.x
+      && this.data.bacteria.spawn[i].x < (this.data.spaceship.position.x + this.data.spaceship.width)
+    ) {
+      this.data.bacteria.spawn.splice(i, 1);
+      script.data.spaceship.life--;
+    }
+  }
+  /******************************/
+  /***** COLLISION AREA END *****/
+  /******************************/
+
+  /*****************************/
+  /***** IMAGE RENDER AREA *****/
+  /*****************************/
+
+  /***** SPACE SHIP *****/
+  moveSpaceship() {
+    if (
+      this.keyState[37]
+      && (
+        (
+          this.data.spaceship.position.x
+          - this.data.spaceship.moveSpeed
+        )
+        >= 0
+      )
+    ) {
+      this.data.spaceship.position.x -= this.data.spaceship.moveSpeed;
+    }
+    else if (
+      this.keyState[39]
+      && (
+        (
+          this.data.spaceship.position.x
+          + this.data.spaceship.width
+          + this.data.spaceship.moveSpeed
+        )
+        <= this.data.canvas.width
+      )
+    ) {
+      this.data.spaceship.position.x += this.data.spaceship.moveSpeed;
+    }
+  }
+
+  drawSpaceship() {
+    this.context.drawImage(
+      this.data.spaceship.image,
+      this.data.spaceship.position.x,
+      this.data.spaceship.position.y,
+      this.data.spaceship.width,
+      this.data.spaceship.height
+    );
+  }
+
+  drawLife() {
+    if (this.data.spaceship.life === 0) {
+      this.data.end = true;
+    }
+    this.context.drawImage(
+      this.data.images.life.images[this.data.spaceship.life],
+      this.data.images.life.position.x,
+      this.data.images.life.position.y,
+      this.data.images.life.width,
+      this.data.images.life.height
+    );
+  }
+
+  drawScoreText() {
+    this.context.drawImage(
+      this.data.images.score.image,
+      this.data.images.score.position.x,
+      this.data.images.score.position.y,
+      this.data.images.score.width,
+      this.data.images.score.height
+    );
+  }
+
+  drawScore() {
+    var scoreText = this.data.spaceship.score.toString();
+    for (var i = 0; i < scoreText.length; i++) {
+      this.context.drawImage(
+        this.data.images.numbers.image,
+        this.data.images.numbers.clip[parseInt(scoreText[i])].x,
+        this.data.images.numbers.clip[parseInt(scoreText[i])].y,
+        this.data.images.numbers.width,
+        this.data.images.numbers.height,
+        this.data.images.numbers.position.x + (i * (this.data.images.numbers.width + 3)),
+        this.data.images.numbers.position.y,
+        this.data.images.numbers.width,
+        this.data.images.numbers.height
+      );
+    }
+  }
+
+  renderSpaceship() {
+    this.moveSpaceship();
+    this.drawSpaceship();
+    this.drawLife();
+    this.drawScoreText();
+    this.drawScore();
+  }
+  /***** SPACE SHIP END *****/
+
+  /***** FIRE *****/
+  makeFire() {
+    if (script.keyState[32]) {
+      script.keyState[32] = false;
+      if (this.data.spaceship.fire.spawn.length < 2) {
+        this.data.spaceship.fire.spawn.push({
+          x: this.data.spaceship.position.x + Math.ceil((this.data.spaceship.width / 2)) - Math.ceil(this.data.spaceship.fire.width / 2),
+          y: this.data.spaceship.position.y - this.data.spaceship.fire.height
+        });
+      }
+    }
+  }
+
+  moveFire(i) {
+    if (typeof this.data.spaceship.fire.spawn[i] === "undefined") {
+      return;
+    }
+    this.data.spaceship.fire.spawn[i].y -= this.data.spaceship.fire.moveSpeed;
+
+    if (this.data.spaceship.fire.spawn[i].y + this.data.spaceship.fire.height < 0) {
+      this.data.spaceship.fire.spawn.splice(i, 1);
+    }
+  }
+
+  drawFire() {
+    for (var i = 0; i < this.data.spaceship.fire.spawn.length; i++) {
+      if (typeof this.data.spaceship.fire.spawn[i] === "undefined") {
+        continue;
+      }
+      this.context.fillStyle = "white";
+      this.context.fillRect(
+        this.data.spaceship.fire.spawn[i].x,
+        this.data.spaceship.fire.spawn[i].y,
+        this.data.spaceship.fire.width,
+        this.data.spaceship.fire.height
+      );
+      this.moveFire(i);
+      this.fireToBacteriaCollision(i);
+    }
+  }
+
+  renderFire() {
+    this.makeFire();
+    this.drawFire();
+  }
+  /***** FIRE END *****/
+
+  /***** BACTERIA *****/
+  summonBacteria() {
+    this.data.bacteria.timer++;
+    if (this.data.bacteria.timer % this.data.bacteria.summonTime === 0) {
+      this.data.bacteria.spawn.push({
+        x: this.helper.randNumGen(
+          Math.ceil(this.data.bacteria.width / 2),
+          this.data.canvas.width
+          - this.data.bacteria.width
+          - Math.ceil(this.data.bacteria.width / 2)
+        ),
+        y: 0 - this.data.bacteria.height
+      });
+    }
+  }
+
+  moveBacteria(i) {
+    if (typeof this.data.bacteria.spawn[i] === "undefined") {
+      return;
+    }
+    
+    if (this.data.bacteria.spawn[i].y > this.data.canvas.height) {
+      this.data.bacteria.spawn.splice(i, 1);
+      this.data.spaceship.life--;
+    }
+    else {
+      this.data.bacteria.spawn[i].y += this.data.bacteria.moveSpeed;
+      this.bacteriaToSpaceShipCollision(i);
+    }
+  }
+
+  drawBacteria() {
+    for (var i = 0; i < this.data.bacteria.spawn.length; i++) {
+      if (typeof this.data.bacteria.spawn[i] === "undefined") {
+        continue;
+      }
+      this.moveBacteria(i);
+      this.context.drawImage(
+        this.data.bacteria.image,
+        this.data.bacteria.spawn[i].x,
+        this.data.bacteria.spawn[i].y,
+        this.data.bacteria.width,
+        this.data.bacteria.height
+      );
+    }
+  }
+
+  renderBacteria() {
+    this.summonBacteria();
+    this.drawBacteria();
+  }
+  /***** BACTERIA END *****/
+
+  clearCanvas() {
+    this.context.clearRect(0, 0, this.data.canvas.width, this.data.canvas.height);
+  }
+
+  render() {
+    this.clearCanvas();
+    this.renderSpaceship();
+    this.renderFire();
+    this.renderBacteria();
+  }
+  /*********************************/
+  /***** IMAGE RENDER AREA END *****/
+  /*********************************/
+
+  /************************************/
+  /***** DATA INITIALIZATION AREA *****/
+  /************************************/
+
+  /***** IMAGES *****/
+  setTitle() {
+    this.context.drawImage(
+      this.data.images.title.image,
+      this.data.images.title.position.x,
+      this.data.images.title.position.y,
+      this.data.images.title.width,
+      this.data.images.title.height
+    );
+  }
+
+  setControls() {
+    this.context.drawImage(
+      this.data.images.controls.image,
+      this.data.images.controls.position.x,
+      this.data.images.controls.position.y,
+      this.data.images.controls.width,
+      this.data.images.controls.height
+    );
+  }
+
+  setBegin() {
+    this.context.drawImage(
+      this.data.images.begin.image,
+      this.data.images.begin.position.x,
+      this.data.images.begin.position.y,
+      this.data.images.begin.width,
+      this.data.images.begin.height
+    );
+  }
+
+  setGameOver() {
+    this.context.drawImage(
+      this.data.images.gameover.image,
+      this.data.images.gameover.position.x,
+      this.data.images.gameover.position.y,
+      this.data.images.gameover.width,
+      this.data.images.gameover.height
+    );
+    
+    script.data.start = false;
+    
+    this.gameOverCount++;
+  }
+
+  setImages() {
+    this.context.clearRect(0, 0, this.data.canvas.width, this.data.canvas.height);
+    if (!script.data.start && !script.data.end) {
+      this.setTitle();
+      this.setControls();
+      this.setBegin();
+    }
+    else if (
+      (script.data.start && script.data.end) ||
+      (!script.data.start && script.data.end)
+    ) {
+      this.setGameOver();
+      this.drawLife();
+      this.drawScoreText();
+      this.drawScore();
+    }
+  }
+  /***** IMAGES END *****/
+
+  /***** SPACE SHIP *****/
+  setSpaceshipPosition() {
+    this.data.spaceship.position.x = Math.round((this.data.canvas.width / 2) - (this.data.spaceship.width / 2));
+    this.data.spaceship.position.y = this.data.canvas.height - this.data.spaceship.height - 25;
+  }
+  /***** SPACE SHIP END *****/
+
+  initialize(callback) {
+    this.setEvents();
+    this.setImages();
+    this.setSpaceshipPosition();
+    callback();
+  }
+  /****************************************/
+  /***** DATA INITIALIZATION AREA END *****/
+  /****************************************/
+}
+
+var script = new Script();
+
+script.initialize(function startAnimation() {
+  requestAnimationFrame(startAnimation);
+  if (script.data.start && !script.data.end) {
+    script.render();
+  }
+  else if (!script.data.start || script.data.end) {
+    script.setImages();
+  }
+});
+</script>
+</body>
+</html>

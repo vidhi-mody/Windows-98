@@ -1,0 +1,19 @@
+{
+  "name": "Windows-98-Javascript",
+  "description": "",
+  "main": "script.js",
+  "license": "ISC",
+  "homepage": "https://github.com/cyrixninja/Windows-98-Javascript",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.6.0",
+    "jquery-ui": "^1.12.1",
+    "browserfs": "^1.4.3"
+  }
+}
