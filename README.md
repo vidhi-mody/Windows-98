@@ -1,5 +1,8 @@
 # ![](https://win98icons.alexmeub.com/icons/png/windows-4.png) [Web98](https://web98.netlify.app)
 
+For this Hack From the Past Hackathon we decided to build something really nostalgic and something that is really close to our heart. 
+We brought Windows 98 back to life! Modern browsers have dropped support for Windows98 long ago. So we decided to build this retro box to relive that era and bring our childhood memories back to life. 
+
 Can't relate to those 90's kid tech memes? Relive the 90's with this retro web-based Windows 98 desktop remake.
 
 ## Technology Stack
@@ -79,8 +82,8 @@ For more information, check out our [Contributing Guide]().
 
 ## Live Demo
 
-If you want to try out our application and indulge in the nostalgia, visit [https://web98.netlify.app](https://web98.netlify.app)
+If you want to try out our application and indulge in the nostalgia, visit [https://www.rediscover-the-past-with.tech/](https://www.rediscover-the-past-with.tech/)
 
 ## License
 
-[MIT](License) © 2021 Vidhi Mody 
+[MIT](License) © 2021 Vidhi Mody & Soham Parekh
