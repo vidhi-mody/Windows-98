@@ -1,4 +1,4 @@
-# ![](https://win98icons.alexmeub.com/icons/png/windows-4.png) [Web98](https://web98.netlify.app)
+# ![](https://win98icons.alexmeub.com/icons/png/windows-4.png) [Web98](https://www.rediscover-the-past-with.tech/)
 
 For this Hack From the Past Hackathon we decided to build something really nostalgic and something that is really close to our heart. 
 We brought Windows 98 back to life! Modern browsers have dropped support for Windows98 long ago. So we decided to build this retro box to relive that era and bring our childhood memories back to life. 
